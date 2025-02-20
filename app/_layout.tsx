@@ -1,14 +1,28 @@
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import { useFonts, Montserrat_300Light, Montserrat_500Medium, Montserrat_700Bold, Montserrat_800ExtraBold,  } from '@expo-google-fonts/montserrat';
+import { View, ActivityIndicator } from 'react-native';
+
+import colors from '@/src/styles/colors';
 
 export default function RootLayout() {
-
-
   return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
+  let [fontsLoaded] = useFonts({
+    Montserrat_300Light,
+    Montserrat_500Medium,
+    Montserrat_700Bold,
+    Montserrat_800ExtraBold,
+  })
 
+  if(!fontsLoaded){
+    return(
+      <View>
+        <ActivityIndicator size={'small'} color={colors.purple}/>
+      </View>
+    )
+  }
 
   return (
       <Stack initialRouteName='index'>
