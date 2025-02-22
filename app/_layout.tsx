@@ -2,6 +2,8 @@ import { Stack } from 'expo-router';
 import { useFonts, Montserrat_300Light, Montserrat_500Medium, Montserrat_700Bold, Montserrat_800ExtraBold,  } from '@expo-google-fonts/montserrat';
 import { View, ActivityIndicator } from 'react-native';
 
+import { AuthProvider } from "@/src/services/context";
+
 import colors from '@/src/styles/colors';
 
 export default function RootLayout() {
@@ -25,10 +27,12 @@ function RootLayoutNav() {
   }
 
   return (
+    <AuthProvider>
       <Stack initialRouteName='index'>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="signon" options={{ headerShown: false }} />
       </Stack>
+    </AuthProvider>
   );
 }

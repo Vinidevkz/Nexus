@@ -1,6 +1,11 @@
-import {View, Text, StyleSheet, SafeAreaView, ScrollView, StatusBar} from 'react-native'
-
+import {View, Text, StyleSheet, SafeAreaView, ScrollView, StatusBar, Alert} from 'react-native'
+import { useState, useContext } from 'react';
 import { useRouter } from "expo-router";
+
+import Routes from '@/src/services/routes'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '@/src/services/context';
+
 
 import styles from '@/src/styles/styles'
 import colors from '@/src/styles/colors'
@@ -12,6 +17,55 @@ import { FontAwesome } from '@expo/vector-icons'
 export default function Signon() {
 
     const route = useRouter()
+
+    const {setUser} = useAuth()
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [name, setName] = useState('')
+    const [userName, setUserName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [age, setAge] = useState('')
+    const [area, setArea] = useState('')
+    const [bio, setBio] = useState('')
+
+    async function registerUser() {
+        const url = Routes.signonUser
+        const body = JSON.stringify({name, userName, email, password, age, area, bio})
+
+        console.log('Url da requisição: ', url)
+        console.log("Corpo da requisição: ", body)
+
+        setIsLoading(true)
+
+        try {
+            const request = await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: body
+            })
+
+            console.log(body)
+
+            const response = await request.json()
+
+            if(request.ok){
+                const {token, newUser} = response
+                await AsyncStorage.setItem('token', response.token)
+                await AsyncStorage.setItem('user', JSON.stringify(newUser))
+                setUser({token, newUser})
+                route.push('/(tabs)')
+            }
+        } catch (error) {
+            Alert.alert('Erro ao se cadastrar.', 'Houve um erro interno. Tente novamente mais tarde.')
+            console.log('Erro:', error)
+        }finally{
+            setIsLoading(false)
+        }
+    }
+
+
 
     return(
         <SafeAreaView style={s.areaView}>
@@ -32,10 +86,9 @@ export default function Signon() {
                     Faça seu Cadastro
                 </Text>
             </View>
+
+            <Text style={{color: colors.defaultWhite}}>{name}</Text>
             <ScrollView>
-
-
-
             <View style={s.container}>
                 <View style={s.cadCont}>
                     <Text style={styles.subtitle}>
@@ -45,6 +98,8 @@ export default function Signon() {
                      borderWidth={1}
                      borderColor={colors.gray}
                      borderRadius={10}
+                     maxLen={50}
+                     onChange={setName}
                     />
                 </View>
 
@@ -56,6 +111,8 @@ export default function Signon() {
                      borderWidth={1}
                      borderColor={colors.gray}
                      borderRadius={10}
+                     maxLen={20}
+                     onChange={setUserName}
                     />
                 </View>
 
@@ -67,6 +124,8 @@ export default function Signon() {
                      borderWidth={1}
                      borderColor={colors.gray}
                      borderRadius={10}
+                     maxLen={50}
+                     onChange={setEmail}
                     />
                 </View>
 
@@ -78,6 +137,9 @@ export default function Signon() {
                      borderWidth={1}
                      borderColor={colors.gray}
                      borderRadius={10}
+                     security={true}
+                     maxLen={30}
+                     onChange={setPassword}
                     />
                 </View>
 
@@ -89,6 +151,7 @@ export default function Signon() {
                      borderWidth={1}
                      borderColor={colors.gray}
                      borderRadius={10}
+                     onChange={setAge}
                     />
                 </View>
 
@@ -100,6 +163,7 @@ export default function Signon() {
                      borderWidth={1}
                      borderColor={colors.gray}
                      borderRadius={10}
+                     onChange={setArea}
                     />
                 </View>
 
@@ -112,17 +176,21 @@ export default function Signon() {
                      borderColor={colors.gray}
                      borderRadius={10}
                      numberOfLines={5}
+                     maxLen={200}
                      multiline={true}
                      textAlign='top'
+                     onChange={setBio}
                     />
                 </View>
             </View>
             </ScrollView>
 
             <Button
-            title='Cadastrar-se'
-            backgroundColor={colors.purple}
-            borderRadius={10}
+                title='Cadastrar-se'
+                backgroundColor={colors.purple}
+                borderRadius={10}
+                onPress={registerUser}
+                isLoading={isLoading}
             />
         </SafeAreaView>
     )

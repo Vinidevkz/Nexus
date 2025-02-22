@@ -13,16 +13,22 @@ interface TextInputProps {
     iconLib?: any,
     numberOfLines?: number,
     multiline?: boolean,
-    textAlign?: string,
+    textAlign?: 'top' | 'bottom' | 'auto' | 'center' | undefined,
+    security?: boolean,
+    maxLen?: number,
+    onChange?: (text: string) => void
 }
 
-const TextInputComp: React.FC<TextInputProps> = ({placeholder, backgroundColor, borderWidth, borderColor, borderRadius, icon, iconLib: IconLib, numberOfLines, multiline, textAlign}) => {
+const TextInputComp: React.FC<TextInputProps> = ({placeholder, backgroundColor, borderWidth, borderColor, borderRadius, icon, iconLib: IconLib, numberOfLines, multiline, textAlign, security, maxLen, onChange}) => {
     return(
         <TextInput
             placeholder={placeholder}
             numberOfLines={numberOfLines}
             multiline={multiline}
             textAlignVertical={textAlign}
+            secureTextEntry={security}
+            onChangeText={onChange}
+            maxLength={maxLen}
             style={[styles.text, {
                 backgroundColor: backgroundColor,
                 borderWidth: borderWidth,
