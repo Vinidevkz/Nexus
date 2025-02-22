@@ -18,7 +18,7 @@ function RootLayoutNav() {
 
   if(!fontsLoaded){
     return(
-      <View>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.defaultBlack}}>
         <ActivityIndicator size={'small'} color={colors.purple}/>
       </View>
     )
@@ -28,6 +28,7 @@ function RootLayoutNav() {
       <Stack initialRouteName='index'>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="signon" options={{ headerShown: false }} />
       </Stack>
   );
 }

@@ -1,4 +1,7 @@
 import { SafeAreaView, StatusBar, View, Text, Image, StyleSheet } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+
+import { useRouter } from "expo-router";
 
 //styles
 import colors from "@/src/styles/colors";
@@ -8,11 +11,13 @@ import styles from "@/src/styles/styles";
 import Button from "@/src/components/button";
 import { AntDesign } from "@expo/vector-icons";
 
-console.log(colors.defaultBlack);
-
 export default function Index() {
+
+  const route = useRouter()
+
   return (
     <SafeAreaView style={s.safeArea}>
+
       <StatusBar
         barStyle={"light-content"}
         backgroundColor={colors.defaultBlack}
@@ -29,14 +34,13 @@ export default function Index() {
 
       <View style={s.container}>
         <Button title="Fazer Login" width={'90%'} borderWidth={3} borderColor={colors.purple} borderRadius={10}/>
-        <Button title="Cadastre-se" width={'90%'} borderWidth={3} borderColor={colors.purple} borderRadius={10}/>
+        <Button title="Cadastre-se" width={'90%'} borderWidth={3} borderColor={colors.purple} borderRadius={10} onPress={() => route.push('./signon')}/>
         <Button title="Entrar com o GitHub" width={'90%'} borderWidth={3} borderColor={colors.defaultWhite} borderRadius={10} icon="github" iconLib={AntDesign}/>
 
         <View>
             <Text style={[styles.legend, {color: colors.defaultWhite, textAlign:'center'}]}>© 2025 Criado e desenvolvido por Vinicius Eduardo.{'\n'} Todos os direitos reservados.</Text>
         </View>
       </View>
-
 
     </SafeAreaView>
   );
@@ -56,5 +60,13 @@ const s = StyleSheet.create({
     width: '100%',
     height: 200,
     gap: 10
+  },
+
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 300,
   },
 });
