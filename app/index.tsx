@@ -1,8 +1,6 @@
 import { SafeAreaView, StatusBar, View, Text, Image, StyleSheet } from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
 
 import { useRouter } from "expo-router";
-
 
 //styles
 import colors from "@/src/styles/colors";
@@ -35,7 +33,7 @@ export default function Index() {
         </View>
 
         <View style={s.container}>
-          <Button title="Fazer Login" width={'90%'} borderWidth={3} borderColor={colors.purple} borderRadius={10}/>
+          <Button title="Fazer Login" width={'90%'} borderWidth={3} borderColor={colors.purple} borderRadius={10} onPress={() => route.push('./signin')}/>
           <Button title="Cadastre-se" width={'90%'} borderWidth={3} borderColor={colors.purple} borderRadius={10} onPress={() => route.push('./signon')}/>
           <Button title="Entrar com o GitHub" width={'90%'} borderWidth={3} borderColor={colors.defaultWhite} borderRadius={10} icon="github" iconLib={AntDesign}/>
 

@@ -1,5 +1,5 @@
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator} from "react-native";
-import { MaterialIcons, FontAwesome, Ionicons, AntDesign } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome, Ionicons, AntDesign, Octicons } from "@expo/vector-icons";
 
 import styles from "../styles/styles";
 import colors from "../styles/colors";

@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { useFonts, Montserrat_300Light, Montserrat_500Medium, Montserrat_700Bold, Montserrat_800ExtraBold,  } from '@expo-google-fonts/montserrat';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, StatusBar } from 'react-native';
 
 import { AuthProvider } from "@/src/services/context";
 
@@ -21,6 +21,13 @@ function RootLayoutNav() {
   if(!fontsLoaded){
     return(
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.defaultBlack}}>
+
+        
+<StatusBar
+          barStyle={"light-content"}
+          backgroundColor={colors.defaultBlack}
+        />
+
         <ActivityIndicator size={'small'} color={colors.purple}/>
       </View>
     )
@@ -32,6 +39,7 @@ function RootLayoutNav() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="signon" options={{ headerShown: false }} />
+        <Stack.Screen name="signin" options={{ headerShown: false }} />
       </Stack>
     </AuthProvider>
   );

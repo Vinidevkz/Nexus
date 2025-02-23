@@ -1,6 +1,8 @@
+
+import { StyleSheet } from "react-native"
 import colors from "./colors"
 
-export default {
+const styles = StyleSheet.create({
     title: {
         fontSize: 22,
         fontFamily: 'Montserrat_700Bold',
@@ -22,5 +24,14 @@ export default {
         fontSize: 13,
         fontFamily: 'Montserrat_300Light',
         color: colors.defaultWhite
+    },
+
+    header: {
+        alignItems: "center",
+        justifyContent: "space-around",
     }
-}
+})
+
+
+
+export default styles
