@@ -27,8 +27,16 @@ const styles = StyleSheet.create({
     },
 
     header: {
+        width: '100%',
+        height: 80,
+        flexDirection: 'row',
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
+        paddingHorizontal: 15,
+        borderBottomWidth: 2,
+        borderColor: colors.gray,
+        zIndex: 1,
+        position: 'absolute'
     }
 })
 
