@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat_500Medium',
         color: colors.defaultWhite
     },
+    descText: {
+        fontSize: 15,
+        fontFamily: 'Montserrat_300Light',
+        color: colors.defaultWhite
+    },
     legend: {
         fontSize: 13,
         fontFamily: 'Montserrat_300Light',
@@ -27,19 +32,19 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        width: '100%',
+        width: '95%',
         height: 80,
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: "space-between",
         paddingHorizontal: 15,
-        borderBottomWidth: 2,
-        borderColor: colors.gray,
+        elevation: 15,
+        borderRadius: 50,
+        margin: 5,
         zIndex: 1,
-        position: 'absolute'
+        position: 'absolute',
+        backgroundColor: colors.fullBlack
     }
 })
-
-
 
 export default styles
