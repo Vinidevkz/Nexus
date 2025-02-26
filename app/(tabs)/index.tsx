@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
 import {
   View,
   Text,
@@ -13,6 +14,7 @@ import {
 } from "react-native";
 import { useAuth } from "@/src/services/context";
 
+
 //format date
 import { format } from "date-fns";
 
@@ -22,13 +24,15 @@ import colors from "@/src/styles/colors";
 
 import IconProfile from "@/src/components/iconProfile";
 import Button from "@/src/components/button";
+import Routes from "@/src/services/routes";
 
 
 export default function Home() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
   const [filter, setFilter] = useState<string>("Postagens");
   const [isSelected, setIsSelected] = useState();
+  const [top10Posts, setTop10Posts] = useState<any>([])
 
   const Posts = [
     {
@@ -36,26 +40,26 @@ export default function Home() {
       userId: "1",
       userName: "Jonas Ribeiro",
       userUserName: "jonasrib2025",
-      title: "O início na programação",
       description:
         "Entrar no mundo da programação pode ser tanto desafiador quanto incrivelmente recompensador. Para muitos, o primeiro contato com códigos, algoritmos e linguagens de programação parece intimidador, mas é importante lembrar que todo programador, em algum momento, já foi um iniciante. A jornada na programação começa com curiosidade, persistência e a vontade de aprender.",
-      createdAt: "2025-02-23T23:10:44.453Z",
+      area: "Postagens",
       likes: 26,
       comments: 56,
       crystals: 19,
+      createdAt: "2025-02-23T23:10:44.453Z",
     },
     {
       _id: "2",
       userId: "2",
       userName: "Ricardo Almeida",
       userUserName: "rickalmeida2025",
-      title: "O início na programação",
       description:
         "Entrar no mundo da programação pode ser tanto desafiador quanto incrivelmente recompensador. Para muitos, o primeiro contato com códigos, algoritmos e linguagens de programação parece intimidador, mas é importante lembrar que todo programador, em algum momento, já foi um iniciante. A jornada na programação começa com curiosidade, persistência e a vontade de aprender.",
-      createdAt: "2025-02-23T23:10:44.453Z",
+      area: "Postagens",
       likes: 26,
       comments: 56,
       crystals: 19,
+      createdAt: "2025-02-23T23:10:44.453Z",
     },
   ];
 
@@ -77,6 +81,38 @@ export default function Home() {
       title: "Notícias",
     },
   ];
+
+  useEffect(() => {
+    const getTop10Posts = async () => {
+      const url = Routes.top10Posts
+      console.log("Url da requisição top 10: ", url)
+
+      try {
+        const request = await fetch(url, {
+          method: 'GET',
+          headers: new Headers({
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          })
+        });
+
+        console.log("Headers enviados:", request.headers);
+
+        const response = await request.json()
+
+        if(request){
+          console.log('Top 10 posts do mês: ', response)
+          setTop10Posts(response)
+        }else{
+          console.log('Erro ao pegar os top 10 do mês: ', response.message || "Erro desconhecido")
+        }
+      } catch (error) {
+        console.log("Não foi possivel pegar os top 10 do mês: ", error)
+      }
+    }
+
+    getTop10Posts()
+  }, [])
 
   return (
     <SafeAreaView style={s.safeArea}>
